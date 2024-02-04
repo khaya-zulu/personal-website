@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     osPlugin({
-      customCSS: ["./src/os.css"],
+      customCSS: ["/src/os.css"],
       user: {
         background: {
           creditName: "Denys Striyeshyn",
