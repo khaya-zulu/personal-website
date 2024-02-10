@@ -15,6 +15,6 @@
     "astro": "^4.0.8",
     "typescript": "5.3.3",
     "@astrojs/mdx": "2.0.3",
-    "@builder-os/astro": "0.1.1"
+    "@builder-os/astro": "0.1.2"
   }
 }
