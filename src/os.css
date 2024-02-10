@@ -12,10 +12,9 @@ body {
 
   --os-footer-icon-background-color: #000;
 
-  --os-sidebar-button-color: #767676;
+  --os-sidebar-button-active-text-color: #767676;
 
   /* sidebar */
-  --os-sidebar-inner-border: #c8c3c0;
   --os-sidebar-border-from: #050100;
   --os-sidebar-border-to: #686968;
 
@@ -38,47 +37,4 @@ body {
   --os-spotify-play-background-color: #303030;
 
   --os-spotify-song-artists-text-color: #575757;
-}
-
-:example {
-  --os-footer-border-color: #bfc1c3;
-  --os-footer-background-color: rgba(221, 214, 205, 0.4);
-  --os-footer-text-color: #000;
-
-  --os-footer-icon-border-from: #eaf3fc;
-  --os-footer-icon-border-to: #ccd9e6;
-
-  --os-footer-icon-background-color: #000;
-
-  --os-sidebar-button-color: #fff;
-
-  /* sidebar */
-  --os-sidebar-border-from: #050100;
-  --os-sidebar-border-to: #686968;
-
-  --os-sidebar-background-color: rgba(223, 222, 220, 0.9);
-  --os-sidebar-border: #dfdedc;
-
-  --os-sidebar-inner-background-color: rgba(223, 222, 220, 0.5);
-  --os-sidebar-inner-border: #cecece;
-
-  --os-spotify-card-background-to: #fff;
-  --os-spotify-card-background-from: rgba(221, 214, 205, 0.5);
-
-  /* spotify */
-  --os-spotify-card-background-from: rgba(206, 105, 75, 0.8);
-  --os-spotify-card-background-to: #e4ac91;
-  --os-spotify-card-border-color: #fff;
-
-  --os-spotify-progress-background-color: #fff;
-  --os-spotify-progress-color: #ce694b;
-
-  --os-spotify-controls-color: #000000;
-  --os-spotify-play-color: #ffffff;
-  --os-spotify-play-background-color: #000000;
-
-  --os-spotify-track-color: #fff;
-
-  --os-spotify-song-name-text-color: #fef7f3;
-  --os-spotify-song-artists-text-color: #feece3;
 }

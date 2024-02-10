@@ -2,4 +2,4 @@
 
 Probably the 100th version of my personal website, built with [BuilderOS](https://builderos.dev).
 
-[/screenshot](screenshot of builderos)
+[screenshot of khayaOS](/public/screenshot.png)
