@@ -15,8 +15,8 @@ dependencies:
     specifier: ^5.1.0
     version: 5.1.0(astro@4.3.2)(tailwindcss@3.4.1)
   '@builder-os/astro':
-    specifier: 0.3.5
-    version: 0.3.5(astro@4.3.2)
+    specifier: 0.3.6
+    version: 0.3.6(astro@4.3.2)
   astro:
     specifier: ^4.0.8
     version: 4.3.2(typescript@5.3.3)
@@ -433,8 +433,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@builder-os/astro@0.3.5(astro@4.3.2):
-    resolution: {integrity: sha512-CNfUjM0fu6Dgnz9bWtOmYvBGdghQakO3pXxrgUTFWckHATOBMTFA9v88bmJ5z9ip8eVVdwwD0Bc+qmup56vV9g==}
+  /@builder-os/astro@0.3.6(astro@4.3.2):
+    resolution: {integrity: sha512-iWW+0bt+zmr+x6j46jx/sc8wJtyeYUpbuNvc5149+bYohEMLKE/ijf4g3zeDP2eCZcU8tn4X6UvXT+lMaqkK8w==}
     peerDependencies:
       astro: ^4.3.2
     dependencies:
