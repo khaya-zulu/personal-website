@@ -51,6 +51,9 @@ export default defineConfig({
           { name: "Zambia 🇿🇲", isChecked: false },
         ],
       },
+      page: {
+        ogImage: "/og-image.png",
+      },
     }),
   ],
 });
