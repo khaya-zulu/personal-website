@@ -16,6 +16,7 @@
     "typescript": "5.3.3",
     "@astrojs/mdx": "2.0.3",
     "@builder-os/astro": "0.3.6",
-    "sharp": "0.33.2"
+    "sharp": "0.33.2",
+    "@astrojs/vercel": "7.3.0"
   }
 }

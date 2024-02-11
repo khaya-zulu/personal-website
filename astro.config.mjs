@@ -3,10 +3,18 @@ import osPlugin from "@builder-os/astro";
 
 import mdx from "@astrojs/mdx";
 
+import vercel from "@astrojs/vercel/serverless";
+
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
   integrations: [
     mdx(),
+    vercel({
+      webAnalytics: {
+        enabled: true,
+      },
+    }),
     osPlugin({
       customCSS: ["/src/os.css"],
       user: {
