@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.3.0
     version: 7.3.0(astro@4.3.2)
   '@builder-os/astro':
-    specifier: 0.3.6
-    version: 0.3.6(astro@4.3.2)
+    specifier: 0.4.6
+    version: 0.4.6(astro@4.3.2)
   astro:
     specifier: ^4.0.8
     version: 4.3.2(typescript@5.3.3)
@@ -454,8 +454,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@builder-os/astro@0.3.6(astro@4.3.2):
-    resolution: {integrity: sha512-iWW+0bt+zmr+x6j46jx/sc8wJtyeYUpbuNvc5149+bYohEMLKE/ijf4g3zeDP2eCZcU8tn4X6UvXT+lMaqkK8w==}
+  /@builder-os/astro@0.4.6(astro@4.3.2):
+    resolution: {integrity: sha512-Omb04RhYfbOFpqSRMxOuJh/KUCh3u/th5cH9dQOMB+BJK8CnM/vHgMqZ0MnavXESsxNKri1PPMilOLWeohsGlw==}
     peerDependencies:
       astro: ^4.3.2
     dependencies:
