@@ -14,6 +14,8 @@ body {
 
   --os-sidebar-button-active-text-color: #767676;
 
+  --os-card-loading-background-color: #eaf3fc;
+
   /* sidebar */
   --os-sidebar-border-from: #050100;
   --os-sidebar-border-to: #686968;
