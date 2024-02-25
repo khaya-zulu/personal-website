@@ -19,9 +19,9 @@ export default defineConfig({
       customCSS: ["/src/os.css"],
       user: {
         background: {
-          creditName: "Denys Striyeshyn",
+          creditName: "Alexandru Acea",
           creditProfileUrl:
-            "https://unsplash.com/@denysstriyeshyn?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash",
+            "https://unsplash.com/@alexacea?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash",
         },
         name: "Khaya 🇿🇦",
         description: "Doing it for the fun of things.",
