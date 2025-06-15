@@ -38,19 +38,9 @@ export default defineConfig({
         },
       },
       isBioEnabled: true,
-      isTravelEnabled: true,
       isProjectsEnabled: true,
       isMusicEnabled: true,
       isNotesEnabled: true,
-      travel: {
-        wishlist: [
-          { name: "Botswana 🇧🇼", isChecked: false },
-          { name: "Kenya 🇰🇪", isChecked: false },
-          { name: "Nigeria 🇳🇬", isChecked: false },
-          { name: "Rwanda 🇷🇼", isChecked: false },
-          { name: "Zambia 🇿🇲", isChecked: false },
-        ],
-      },
       page: {
         ogImage: "/og-image.png",
       },
