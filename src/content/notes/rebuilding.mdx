@@ -18,7 +18,7 @@ This blog post focuses on the user-application layer and the journey I took in b
 
 #### UX
 
-This talk by [Allen Pike](https://allenpike.com/2025/post-chat-llm-ui), _titled: [AI UX Design](https://www.youtube.com/watch?v=mRqBjKFyfLc)_ and a season of black mirror 😂 sparked the idea for kayaGPT. The goal: building the the most feature heavy version of ChatGPT that is personal to me.
+This **talk by [Allen Pike](https://allenpike.com/2025/post-chat-llm-ui), _titled: [AI UX Design](https://www.youtube.com/watch?v=mRqBjKFyfLc)_**and a season of black mirror 😂 sparked the idea for kayaGPT. The goal: building the the most feature heavy version of ChatGPT that is personal to me.
 
 > You can already see this trend, as the usage of AI chat interface usage grows. [T3Chat](https://t3.chat/) _(developer-minded ChatGPT)_, [Dia](https://www.diabrowser.com/) _(product-minded ChatGPT)_ and [Scira AI](https://scira.ai/) _(open-source ChatGPT)_.
 
@@ -38,7 +38,7 @@ I concluded that an interface cluttered with pages and sub-UI components wasn’
 
 ---
 
-Another resource that was helpful is from an unlikely source, Apple. They have two design guides on [ML](https://developer.apple.com/design/human-interface-guidelines/machine-learning) and [Generative AI](https://developer.apple.com/design/human-interface-guidelines/generative-ai) that are full gems 💎.
+Another resource that was helpful is from an unlikely source, Apple. They have two design guides on [ML](https://developer.apple.com/design/human-interface-guidelines/machine-learning) and [Generative AI](https://developer.apple.com/design/human-interface-guidelines/generative-ai) that are full gems.
 
 For example the difference between _proactive vs reactive systems_. ChatGPT is reactive by nature. A user types, it responds and occasionally makes use of tools. With kayaGPT I have the opportunity to push towards an event-driven architecture. **Give me a system that is multi-step, that I can run over days or weeks and that checks up on me 😅**
 
@@ -80,7 +80,7 @@ To add Cloudflare's ecosystem of services covers almost every layer of the moder
 
 Here are some highlights I took from building this POC:
 
-- [Bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/) are incredible, they make it effortless for your worker to interact with other Cloudflare resources. I’m using [D1](https://developers.cloudflare.com/d1/) as **my database 💿**, [R2](https://developers.cloudflare.com/r2/) for **image storage 📸** and [Workers AI](https://developers.cloudflare.com/workers-ai/) 🪄 to do things like comment on the weather. In the future, the backend for this project will essentially be a full-stack cloudflare template ✨.
+- [Bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/) are incredible, they make it effortless for your worker to interact with other Cloudflare resources. I’m using [D1](https://developers.cloudflare.com/d1/) as **my database**, [R2](https://developers.cloudflare.com/r2/) for **image storage** and [Workers AI](https://developers.cloudflare.com/workers-ai/) to do things like comment on the weather. In the future, the backend for this project will essentially be a full-stack cloudflare template ✨.
 
 ![Weather commentry](/notes/kayagpt/weather-comment.png)
 
