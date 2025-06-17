@@ -4,25 +4,25 @@ publishedAt: 2024-06-30
 cover: /notes/toy.png
 ---
 
-I’m in the middle of a great read: [AI engineering by Chip Huyen](https://www.amazon.com/AI-Engineering-Building-Applications-Foundation/dp/1098166302). It's consumed most of free time after work 😅. At the time time I've been reflecting on where 5 years of frontend experience could be used to good use.
+I’m in the middle of a great read: [AI engineering by Chip Huyen](https://www.amazon.com/AI-Engineering-Building-Applications-Foundation/dp/1098166302). It's consumed most of free time after work 😅. At the same time I've been reflecting on where 5 years of frontend experience could be used to good use.
 
 ![Introducing ChatGPT Blog post](/notes/kayagpt/introducing-chatgpt.png)
 
-One the consequences of this now [3 year](https://openai.com/index/chatgpt/?utm_source=chatgpt.com) GenAI craze, is how problems once reserved for ML researchers and engineers have now crossed over to a broader community of software developers. Questions around UX, security, and developer tooling are just as important as model performance.
+One of the consequences of the current [3 year](https://openai.com/index/chatgpt/?utm_source=chatgpt.com) GenAI craze, is how problems once reserved for ML researchers and engineers have now crossed over to a broader community of software developers. Questions around UX, security, and developer tooling are just as important as model performance.
 
 ---
 
 My point is, we're living through an extraordinary technology shift that everyone will play a role in help shaping. With some domain knowledge and a bit of creativity, you can meaningfully contribute.
 
-This blog post focuses on the user-application layer and the journey I took in building my own personal ChatGPT interface ([kayaGPT](https://kayagpt.com/)). It’s my first official step towards becoming an AI engineer and is an opportunity to explore the AI product development aspect.
+This blog post focuses on the user-application layer and the journey I took in building my own personal ChatGPT interface ([kayaGPT](https://kayagpt.com/)). It’s my first official step towards becoming an AI engineer and is an opportunity to explore the AI product development cycle.
 
 #### UX for AI applications
 
-There’s an amazing talk by [Allen Pike](https://allenpike.com/2025/post-chat-llm-ui), _titled: [AI UX Design](https://www.youtube.com/watch?v=mRqBjKFyfLc)_, that sparked the idea for kayaGPT. That, and a season of black mirror 😂. I wanted to build the perfect version of ChatGPT for myself.
+This talk by [Allen Pike](https://allenpike.com/2025/post-chat-llm-ui), _titled: [AI UX Design](https://www.youtube.com/watch?v=mRqBjKFyfLc)_ and a season of black mirror 😂 sparked the idea for kayaGPT. The goal: building the the most feature heavy version of ChatGPT that is personal to me.
 
 > You can already see this trend, as the usage of AI chat interface usage grows. [T3Chat](https://t3.chat/) _(developer-minded ChatGPT)_, [Dia](https://www.diabrowser.com/) _(product-minded ChatGPT)_ and [Scira AI](https://scira.ai/) _(open-source ChatGPT)_.
 
-Anyways… the talk covers some interesting surrounding **AI UX.** It includes examples and questions I kept running into when I first started building:
+Anyways… the talk covers some interesting ideas related to **AI UX.** It includes examples and question I ran into while developing this project:
 
 - **“Can my five-step onboarding flow just be five-step conversation?”**
 - **“Can form inputs, like uploading a Github link or profile picture, become tool calls instead?”**
@@ -34,19 +34,19 @@ Anyways… the talk covers some interesting surrounding **AI UX.** It includes e
   style="width: 80%"
 />
 
-It became clear to me that the future may be cluttered with less AI and I had to be intentional in the way designed features and organized my code.
+I concluded that an interface cluttered with pages and sub-UI components wasn’t what I wanted. Instead, I chose to be minimal and intentional when designing features and organizing the code.
 
 ---
 
-Another resource that was very helpful came from Apple 🍎. They have two design guides on [ML](https://developer.apple.com/design/human-interface-guidelines/machine-learning) and [Generative AI](https://developer.apple.com/design/human-interface-guidelines/generative-ai) that are full gems 💎.
+Another resource that was helpful is from an unlikely source, Apple. They have two design guides on [ML](https://developer.apple.com/design/human-interface-guidelines/machine-learning) and [Generative AI](https://developer.apple.com/design/human-interface-guidelines/generative-ai) that are full gems 💎.
 
-One very obvious idea taken from the ML guide, was the idea of _proactive vs reactive systems_. ChatGPT is reactive by nature. A user types, it responds and occasionally makes use of tools. With kayaGPT I have the opportunity to push towards an event-driven architecture. Give me a system that is **multi-step**, that I can **run over days** or weeks and that checks up on me 😅
+For example the difference between _proactive vs reactive systems_. ChatGPT is reactive by nature. A user types, it responds and occasionally makes use of tools. With kayaGPT I have the opportunity to push towards an event-driven architecture. **Give me a system that is multi-step, that I can run over days or weeks and that checks up on me 😅**
 
 ![Proactive vs Reactive from Apple Blog](/notes/kayagpt/proactive-vs-reactive.png)
 
-Honestly, this could be a whole blog post on its own. AI UX is still early, especially examples used in production, so many questions are still unanswered. But that’s what makes it exciting. There’s so much room to invent.
+AI UX could be a dedicated blog on its own. It's still early, with very few good examples in production, so many questions are still unanswered. But that's what makes it exciting (the room to invent).
 
-> I think about this [tweet](https://x.com/patrickc/status/1928509708190757294) by Stripe founder, Patrick Collison, when explaining opportunities above
+> I think about this [tweet](https://x.com/patrickc/status/1928509708190757294) by Stripe founder, Patrick Collison, when reflecting on the unexplored opportunities above.
 
 #### The Stack
 
@@ -60,9 +60,9 @@ I learn by [building](https://upshot.dev/projects), and this project gave me the
 
 #### React Native
 
-I recently jumped back into the React Native ecosystem for work (After 2 years ✌️). Because of Expo it's been very smooth to get back into. The ecosystem has matured a lot: better native tooling, clearer error messages and in my case almost perfect web support (web-peformance still needs catch up).
+I recently jumped back into the React Native ecosystem for work (after 2 years ✌️). Thanks to Expo, it’s been surprisingly smooth to get back into. The ecosystem has matured a lot: better native tooling, clearer error messages and in my case almost perfect web support (Though web performance still needs to catch up).
 
-There are a number features I plan to build over time into the project, which Expo & React Native have packages for:
+There's a list of features that will we built in overt time, which Expo & React Native has package support for:
 
 - [Local models](https://docs.swmansion.com/react-native-executorch/): probably the most exciting because they unlock so many previously impossible use cases.
 - [Voice interfaces & WebRTC](https://github.com/react-native-webrtc/react-native-webrtc): beyond text. Before the end of the year onboarding will be fully voice-driven (if time allows of course 🤞😅)
