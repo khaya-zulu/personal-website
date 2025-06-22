@@ -1,0 +1,198 @@
+---
+title: "kayaGPT: Notes from building an AI application"
+publishedAt: 2025-06-22
+cover: /notes/kayagpt/cover.png
+---
+
+**For the past few weeks, I've been building a personal chatbot**. It's an exploration into AI app development and different patterns. From the UX challenges to server-client tooling to backend architecture choices. This blog post documents parts of that journey, with code snippets and links to resources I found useful throughout the process.
+
+> - [Github code](https://github.com/khaya-zulu/kayaGPT)
+> - [https://kayagpt.com/](https://kayagpt.com/)
+
+---
+
+### The Inspiration ✨
+
+![A screenshot of my personal website](/notes/kayagpt/screenshot.png)
+
+I want to start by sharing the inspiration behind this project: my [personal website](https://upshot.dev/). The idea revolves around workspaces. As engineers, we spend a significant amount of time at our desks. I wanted my website to reflect that and with AI maybe even serve as a smart link-in-bio.
+
+So when OpenAI announced their [image generation API](https://platform.openai.com/docs/guides/image-generation#edit-images), my mind immediately jumped to the idea of creating infinite, personalized workspaces (each generated from a prompt). That gave birth to [kayaGPT](https://kayagpt.com/), **a chatbot that felt personal to me, and one I could take anywhere.**
+
+> Using the OpenAI API to generate a workspace image.
+>
+> <br />
+>
+> ```ts
+> import { toFile } from "openai";
+>
+> // get reference image
+> const referenceImageResponse = await fetch("...");
+>
+> // download reference image as a blob
+> const blob = await referenceImageResponse.blob();
+> const result = toFile(blob, null, { type: "image/png" });
+>
+> // generate a workspace image
+> const openai = new OpenAI({ ... });
+>
+> const imageResponse = await openai.images.edit({
+>   model: "gpt-image-1",
+>   image: [result],
+>   prompt: "...generation instructions... A workspace overlooking the Jozi skyline.",
+> });
+> ```
+>
+> <br />
+>
+> <video
+>   src="/notes/kayagpt/workspace-gen.mov"
+>   style="width: 100%; height: 100%;"
+>   controls
+> />
+
+> - Check out [workspaces.xyz](https://workspaces.xyz/)
+> - [_Introducing our latest image generation model in the API_](https://openai.com/index/introducing-our-latest-image-generation-model-in-the-api/)
+
+### Globally Distributed Universal Apps
+
+##### React Native + Expo
+
+Although it still has some way to go, web support in the React Native ecosystem has come a long way and with [Expo](https://expo.dev/) as a framework, it's even better.
+
+For example, I used a package called [`react-native-image-colors`](https://www.npmjs.com/package/react-native-image-colors), which fetches prominent colors from an image by leveraging platform-specific APIs:
+
+- For Android: the [Palette API](https://developer.android.com/reference/androidx/palette/graphics/Palette).
+- For Web: [node-vibrant](https://github.com/Vibrant-Colors/node-vibrant).
+- For iOS: [UIImageColors swift package](https://github.com/jathu/UIImageColors).
+
+This meant locally I had to build the app for each specific platform using `npx expo run:ios|android|web`, but it was still very cool to see it all work.
+
+> Once a workspace is selected, I use a color [helper function](https://github.com/khaya-zulu/kayaGPT/blob/main/apps/backend/src/utils/color.ts) to get tints and shades of the selected color (similar to [this](https://smart-swatch.netlify.app/)). That color palette is then used throughout the app.
+>
+> <br />
+>
+> ```tsx
+> // user-summary.tsx
+> const userSettings = useUserSettings();
+>
+> return <LinearGradient
+>   colors={[
+>     userSettings.colorSettings[100],
+>     userSettings.colorSettings[700]
+>   ]}
+> ```
+>
+> <br />
+>
+> <video src="/notes/kayagpt/color.mov" style="width: 100%;" controls />
+
+A few other packages I really enjoyed working with were [expo-blur](https://docs.expo.dev/versions/latest/sdk/blur-view/) and [expo-gradient](https://docs.expo.dev/versions/latest/sdk/linear-gradient/). They provide blur and gradient effects that **work smoothly across native and web (with minimal setup)**. I also explored Expo’s [DOM components](https://docs.expo.dev/guides/dom-components/) feature, which lets you use web UI components in native apps through a simple `"use-dom"` directive. I didn’t end up needing it for this project, but again another really cool feature.
+
+> - [Tweet](https://x.com/khaya_was_taken/status/1934037053483987449) expressing my excitement about Expo Router's future
+> - Talk: [React Native 2030](https://www.youtube.com/watch?v=dKItY_2wFH0&t=274s) by Fernando Rojo
+
+##### User Experience
+
+**I'm particularly interested in the UI/UX layer of the AI application layer.** _kayaGPT_ gave me the chance to explore this topic deeper.
+
+Here are a few questions I found myself asking:
+
+- _"Is this UI better suited for a voice agent?"_
+- _"Can tasks like form submission be replaced with tool calls?"_
+- _"Can my five-step onboarding flow just be a five-step conversation?"_
+
+I quickly landed on being as **minimal (yet intentional)** as possible, leaning heavily on the LLM's capabilities like reasoning and tool-calling. It's clear this space is in its early days, which is exciting, because there's so much room to invent.
+
+> From a technical perspective, I've been leveraging a **monorepo setup** for this project. I have an [AI package](https://github.com/khaya-zulu/kayaGPT/tree/main/packages/ai) that is shared between the server and client, making it easy to build highly composable UI components that are derived from the use of an LLM call.
+>
+> <br />
+>
+> ```tsx
+> // backand/src/services/tools/new-workspace.ts
+> import { createNewWorkspaceTool } from "@kgpt/ai/tools";
+>
+> export const newWorkspaceTool = (env: Env, props: { userId: string }) => {
+>   return createNewWorkspaceTool(async ({ prompt }) => {
+>     // ... generate a workspace image
+>     return { workspaceKey: "...", prompt };
+>   });
+> };
+> ```
+>
+> ```tsx
+> // mobile/features/tool/new-workspace.tsx
+> import type { NewWorkspaceToolOutput } from "@kgpt/ai/tools";
+>
+> export const NewWorkspaceTool = ({ workspaceKey, prompt }: NewWorkspaceToolOutput) => {
+> ```
+
+> - Talk: [AI UX Design](https://www.youtube.com/watch?v=mRqBjKFyfLc) by [Allen Pike](https://allenpike.com/2025/post-chat-llm-ui)
+> - [Apple's Machine Learning Design Guidelines](https://developer.apple.com/design/human-interface-guidelines/machine-learning)
+> - [Apple's Generative AI](https://developer.apple.com/design/human-interface-guidelines/generative-ai)
+> - [Tweet](https://x.com/patrickc/status/1928509708190757294) by Patrick Collison (Stripe Co-founder). Reiterating the opporunities in this space.
+
+##### Hono & Cloudflare ⛅️
+
+While we're still on the topic of UX, it's important to highlight the role of backend infrastructure.
+
+For AI UX, **latency is king**. If your voice agent takes two seconds to respond because it’s fetching information in the background, that extra delay negatively impacts the user experience.
+
+For this project, I chose [HonoJS](https://hono.dev/), hosted on [Cloudflare](https://www.cloudflare.com/). Right now, **Cloudflare's ecosystem covers almost every layer of the modern AI stack**, offering a great developer experience through features like [Bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/) and zero cold-start serverless functions via [Workers](https://developers.cloudflare.com/workers/).
+
+> Using the [Workers AI](https://developers.cloudflare.com/workers-ai/), to comment on the weather.
+>
+> <br />
+>
+> ```ts
+> import { createWorkersAI, WorkersAI } from "workers-ai-provider";
+> import { generateText } from "ai";
+>
+> app.get("/weather", async (c) => {
+>   // ...
+>   const workersai = createWorkersAI({
+>     binding: c.env.AI,
+>   });
+>
+>   const response = await generateText({
+>     // use available open-source models https://developers.cloudflare.com/workers-ai/models/
+>     model: workersai.model("@cf/meta/llama-3-8b-instruct"),
+>     prompt: `The temperature in ${weather.regionName} is ${temp}°C with a humidity of ${weather.humidity}%.`,
+>     system: `You are a helpful assistant that displays the current temperature and comments on the users current weather conditions in a friendly manner.\n
+>       The user's name: ${user.displayName}`,
+>   });
+>   // ...
+> });
+> ```
+>
+> <br />
+>
+> <video
+>   src="/notes/kayagpt/weather-comment.mov"
+>   style="width: 100%; height: 100%;"
+>   controls
+> />
+
+Building with AI has made coding feel like play again. Frameworks like HonoJS and [RedwoodSDK](https://rwsdk.com/) make hacking and experimentation genuinely enjoyable.
+
+> - [V8 isolate](https://developers.cloudflare.com/workers/reference/how-workers-works/#isolates)
+> - Podcats: [How Cloudflare Works](https://www.youtube.com/watch?v=C5-741uQPVU)
+> - [It started with a blinking cursor](https://rwsdk.com/personal-software)
+
+### Conclusion
+
+In terms of where the project stands, there's still plenty of room for improvement. Some related to topics found in the blog post:
+
+- **UX improvements**, like making onboarding flow fully voice-based (webrtc 🤘).
+- **Client-side tooling**: Using [LiveStore’s expo adapter](https://expo.dev/blog/local-first-application-development-with-livestore) to bring offline capability or exploring local models with [React Native Executorch](https://docs.swmansion.com/react-native-executorch/).
+- **Architecture upgrades**: introducing more event-driven interactions powered by [Cloudflare Workflows](https://developers.cloudflare.com/workflows/) service.
+
+---
+
+Finally I encourage you start now: **build something for yourself**. Foundation models have introduced a major technology shift that every developer, whether in frontend, security or even devops will end up playing a part in.
+
+**It's important to remember**: we're still early and that the opporunity lies in the domain knowledge and creativity you can bring to the table.
+
+> - [Explained: The conspiracy to make AI seem harder than it is!](https://www.youtube.com/watch?v=2eWuYf-aZE4)
+
+~ Peace ✌️

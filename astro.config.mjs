@@ -5,9 +5,20 @@ import mdx from "@astrojs/mdx";
 
 import vercel from "@astrojs/vercel/serverless";
 
+import react from "@astrojs/react";
+import markdoc from "@astrojs/markdoc";
+import keystatic from "@keystatic/astro";
+
+import everest from "./everest.json";
+
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
+  output: "server",
+  markdown: {
+    shikiConfig: {
+      theme: everest,
+    },
+  },
   integrations: [
     mdx(),
     vercel({
@@ -45,5 +56,8 @@ export default defineConfig({
         ogImage: "/og-image.png",
       },
     }),
+    react(),
+    markdoc(),
+    keystatic(),
   ],
 });

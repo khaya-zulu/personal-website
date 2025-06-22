@@ -44,3 +44,9 @@ body {
 
   --os-spotify-song-artists-text-color: #575757;
 }
+
+pre.astro-code {
+  padding: 20px;
+  border-radius: 10px;
+  border: 4px solid var(--os-sidebar-border);
+}
