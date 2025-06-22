@@ -7,13 +7,12 @@ import vercel from "@astrojs/vercel/serverless";
 
 import react from "@astrojs/react";
 import markdoc from "@astrojs/markdoc";
-import keystatic from "@keystatic/astro";
 
 import everest from "./everest.json";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
+  output: "hybrid",
   markdown: {
     shikiConfig: {
       theme: everest,
@@ -58,6 +57,5 @@ export default defineConfig({
     }),
     react(),
     markdoc(),
-    keystatic(),
   ],
 });
