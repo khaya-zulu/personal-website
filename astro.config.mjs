@@ -6,7 +6,6 @@ import mdx from "@astrojs/mdx";
 import vercel from "@astrojs/vercel/serverless";
 
 import react from "@astrojs/react";
-import markdoc from "@astrojs/markdoc";
 
 import everest from "./everest.json";
 
@@ -56,6 +55,5 @@ export default defineConfig({
       },
     }),
     react(),
-    markdoc(),
   ],
 });
