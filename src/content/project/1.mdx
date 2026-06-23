@@ -1,23 +1,29 @@
 ---
-title: BuilderOS
-tech: [/techstack/astro.svg, /techstack/spotify.svg, /techstack/typescript.svg]
-cover: /projects/os.png
+title: JsonKit
+tech:
+  [
+    /techstack/typescript.svg,
+    /techstack/tauri.svg,
+    /techstack/golang.svg,
+    /techstack/anthropic.svg,
+  ]
+cover: /projects/jsonkit.png
 ---
 
 **Site 🔗**
 
-[https://builder.upshot.dev](https://builder.upshot.dev)
+[Github](https://github.com/khaya-zulu/jsonkit)
 
 **Tech 💻**
 
-Astro, Typescript, Spotify API
+Tauri, React, TypeScript, Go, Anthropic API, jq (gojq), CodeMirror, TanStack Router/Query
 
 **Description 📖**
 
-An astro plugin/template, built using their integrations API and WAAPI.
+A desktop app for working with JSON through conversation.
 
-Every year I update my personal website, almost a recap of my progress over a period of time.
+Paste in some JSON and chat with an AI agent that can actually query and transform it — under the hood it writes jq expressions and runs them against your data via a tool call, so answers come from the real document rather than a guess. A Go backend wraps the Anthropic SDK and the gojq engine, while the Tauri + React client gives you a CodeMirror editor for the JSON and a markdown chat view for the conversation.
 
 **Future work 🕥**
 
-Build a studio (Github Sync support). Add AstroDB, I would also like to give Keystatic a try, with the github mode specifically for managing collections.
+Support multiple JSON sources and saved chat history. Add export of the generated jq queries so they can be reused outside the app, and explore streaming responses for faster feedback on large payloads.
