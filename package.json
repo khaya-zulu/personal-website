@@ -11,7 +11,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "postinstall": "cp patches/spotify-card.astro node_modules/@builder-os/astro/src/components/spotify-card.astro"
+    "postinstall": "cp patches/spotify-card.astro node_modules/@builder-os/astro/src/components/spotify-card.astro && cp patches/utils.ts node_modules/@builder-os/astro/src/lib/utils.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.3.4",
