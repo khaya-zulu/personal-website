@@ -10,7 +10,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postinstall": "cp patches/spotify-card.astro node_modules/@builder-os/astro/src/components/spotify-card.astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.3.4",

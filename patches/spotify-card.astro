@@ -1,0 +1,206 @@
+---
+import Heart from "./icons/heart.astro"
+import PlayPause from "./icons/play-pause.astro"
+import PlayIcon from "./icons/play.astro"
+import ArrowUpRight from "./icons/arrow-up-right.astro"
+import PauseIcon from "./icons/pause.astro"
+
+let spotify: any = {};
+try {
+    const origin = import.meta.env.ORIGIN_URL ?? Astro.url.origin;
+    const resp = await fetch(`${origin}/api/spotify`, { cache: "no-store" })
+
+    if (resp.ok) {
+        const data = await resp.json()
+
+        if (data.payload && (data.type === "track" || data.type === "episode")) {
+            spotify = data.payload
+        }
+    }
+} catch (e) {
+    console.log("/api/spotify error:", e)
+}
+
+const hasTrack = Object.keys(spotify).length > 0
+---
+
+<div
+    id="spotify-card"
+    class:list={[
+        "h-[27.5rem] w-[25rem] bg-white rounded-xl group shadow-md border-white border-8 p-2 first:ml-10 relative inline-block align-top",
+        "hover:mr-20 transition-all duration-200 delay-0 group-hover:delay-150 group-hover:ease-out",
+        !hasTrack && "hidden",
+    ]}
+>
+    <div class="absolute left-0 top-0 bg-paper w-full h-full" />
+    <div class="w-full h-full z-[2] items-center flex  relative rounded-md spotify-card shadow-sm window-blur">
+        <div class="flex flex-col relative flex-1 z-[2]">
+            <img
+                id="song-cover"
+                src={spotify?.songCover}
+                class:list={[
+                    "w-[5rem] h-[5rem] object-cover rounded-xl transition-[filter] shadow mx-auto mb-4 shadow-md",
+                ]}
+                alt="cover image"
+            />
+            <div id="song-name" class="text-center text-zcool px-5 truncate w-60 mx-auto">{spotify?.songName}</div>
+            <div id="song-artists" class="text-center text-slate-700 truncate w-60 mx-auto">{spotify?.songArtists?.join(", ")}</div>
+            <div class="w-2/3 mt-8 mx-auto">
+                <div class="flex justify-between text-sm">
+                    <div id="progress" data-progress={spotify?.progress} data-is-playing={spotify?.isPlaying} />
+                    <div id="duration" data-duration={spotify?.duration} />
+                </div>
+                <div class="h-1 mt-2 rounded-full bg-slate-400 mx-auto progress">
+                    <div id="progress-bar" class="h-full w-0 rounded-full bg-slate-500"></div>
+                </div>
+            </div>
+            <div class="flex gap-5 items-center justify-center mt-4 controls">
+                <Heart className="w-4 h-4" />
+                <div class="flex gap-3 items-center">
+                    <PlayPause className="w-5 h-5 -scale-100 mt-1" />
+                    <div class="w-12 h-12 rounded-full play flex items-center justify-center shadow-sm">
+                        {spotify?.isPlaying ? <PauseIcon className="w-6 h-6" /> : <PlayIcon />}
+                    </div>
+                    <PlayPause className="w-5 h-5" />
+                </div>
+                <ArrowUpRight className="w-4 h-4" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="spotify-card-spacer" class:list={["w-24 inline-block", hasTrack && "hidden"]} />
+
+<style>
+    #song-name {
+        color: var(--os-spotify-song-name-text-color);
+    }
+
+    #song-artists {
+        color: var(--os-spotify-song-artists-text-color);
+    }
+
+    #progress, #duration {
+        color: var(--os-spotify-track-color);
+    }
+
+    .spotify-card {
+        background-image: linear-gradient(to bottom right, var(--os-spotify-card-background-from), var(--os-spotify-card-background-to));
+        border: 2px solid var(--os-spotify-card-border-color);
+    }
+
+    .progress {
+        background-color: var(--os-spotify-progress-background-color);
+    }
+
+    .progress div {
+        background-color: var(--os-spotify-progress-color);
+    }
+
+    .play {
+        background-color: var(--os-spotify-play-background-color);
+        color: var(--os-spotify-play-color);
+    }
+
+    .controls {
+        color: var(--os-spotify-controls-color);
+    }
+</style>
+
+<script>
+    import { analogTime } from "../lib/utils.ts"
+    import { animateEl } from "../lib/animate.ts"
+
+    const elCard = document.getElementById("spotify-card")
+    const elSpacer = document.getElementById("spotify-card-spacer")
+    const elProgress = document.getElementById("progress")
+    const elDuration = document.getElementById("duration")
+    const elProgressBar = document.getElementById("progress-bar")
+    const elSongCover = document.getElementById("song-cover") as HTMLImageElement | null
+    const elSongName = document.getElementById("song-name")
+    const elSongArtists = document.getElementById("song-artists")
+
+    if (elCard && elSpacer && elProgress && elDuration && elProgressBar && elSongCover && elSongName && elSongArtists) {
+        let duration = Number(elDuration.getAttribute("data-duration") || 0)
+        let progress = Number(elProgress.getAttribute("data-progress") || 0)
+        let progressAnimation: Animation | null = null
+        let hasDisplayedTrack = !elCard.classList.contains("hidden") && duration > 0
+
+        const setVisible = (visible: boolean) => {
+            elCard.classList.toggle("hidden", !visible)
+            elSpacer.classList.toggle("hidden", visible)
+            hasDisplayedTrack = visible
+        }
+
+        const updateProgressBar = () => {
+            if (!duration) return
+
+            progressAnimation?.cancel()
+            const animateDuration = Math.max(duration - progress, 0)
+            progressAnimation = animateEl(
+                elProgressBar,
+                { width: [`${(progress / duration) * 100}%`, "100%"] },
+                { duration: animateDuration }
+            )
+        }
+
+        const renderTrack = (spotifyPayload: Record<string, any>) => {
+            duration = spotifyPayload.duration ?? 0
+            progress = spotifyPayload.progress ?? 0
+
+            elSongCover.src = spotifyPayload.songCover ?? ""
+            elSongName.textContent = spotifyPayload.songName ?? ""
+            elSongArtists.textContent = spotifyPayload.songArtists?.join(", ") ?? ""
+            elDuration.textContent = `${analogTime(duration)}`
+            elProgress.textContent = `${analogTime(progress)}`
+
+            setVisible(true)
+            updateProgressBar()
+        }
+
+        const syncSpotify = async () => {
+            try {
+                const resp = await fetch(`${window.origin}/api/spotify`, { cache: "no-store" })
+
+                if (!resp.ok) return
+
+                const spotify = await resp.json()
+                const isPlayable =
+                    (spotify.type === "track" || spotify.type === "episode") &&
+                    spotify.payload
+
+                if (isPlayable) {
+                    renderTrack(spotify.payload)
+                    return
+                }
+
+                if (!hasDisplayedTrack) {
+                    setVisible(false)
+                }
+            } catch (error) {
+                console.error("Spotify sync failed:", error)
+            }
+        }
+
+        if (hasDisplayedTrack) {
+            elProgress.textContent = `${analogTime(progress)}`
+            elDuration.textContent = `${analogTime(duration)}`
+            updateProgressBar()
+        } else {
+            syncSpotify()
+        }
+
+        setInterval(() => {
+            if (!duration || elCard.classList.contains("hidden")) return
+
+            progress += 1000
+            elProgress.textContent = `${analogTime(Math.min(progress, duration))}`
+
+            if (progress >= duration) {
+                syncSpotify()
+            }
+        }, 1000)
+
+        setInterval(syncSpotify, 15000)
+    }
+</script>

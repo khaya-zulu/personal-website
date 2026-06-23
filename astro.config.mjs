@@ -11,6 +11,7 @@ import everest from "./everest.json";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://www.upshot.dev",
   output: "hybrid",
   markdown: {
     shikiConfig: {
